@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AX 종목 분석 대시보드</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top">
+    <a href="#/" class="brand">AX <b>종목분석</b></a>
+    <nav>
+      <a href="#/" data-nav="home">대시보드</a>
+      <a href="#/rules" data-nav="rules">내 규칙</a>
+      <a href="#/account" data-nav="account">모의투자</a>
+    </nav>
+    <div class="search">
+      <input id="search" type="search" placeholder="종목명·코드 검색" aria-label="종목 검색" autocomplete="off" />
+      <ul id="search-list" class="search-list" hidden></ul>
+    </div>
+  </header>
+  <div id="app"></div>
+  <p class="disclaimer">점수·지표는 계산식이 공개된 규칙 기반 분석이고, 모의투자는 가상의 돈으로 하는 연습이에요. 백테스트는 과거 결과일 뿐 미래 수익을 보장하지 않아요. 실제 투자 판단에 사용하지 마세요.</p>
+  <script src="app.js"></script>
+</body>
+</html>

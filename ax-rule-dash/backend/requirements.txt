@@ -1,0 +1,7 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+sqlalchemy>=2.0
+pydantic>=2.6
+# 실제 데이터 수집(python -m app.ingest)을 쓸 때만: pykrx  (+ 재무는 환경변수 DART_API_KEY)
+# PostgreSQL 을 쓸 때만: psycopg[binary]>=3.1
+# 테스트: pytest, httpx
