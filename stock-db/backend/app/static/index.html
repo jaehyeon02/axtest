@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>주식 종목 데이터 대시보드</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>주식 종목 데이터 대시보드</h1>
+      <p class="sub">PostgreSQL에 적재한 주가·재무 데이터를 FastAPI로 조회하고 관리합니다.</p>
+    </div>
+    <div class="top-right">
+      <span id="health" class="pill">연결 확인 중…</span>
+      <a class="link" href="/docs" target="_blank" rel="noopener">API 문서 (Swagger)</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="card toolbar" aria-label="조회 조건">
+      <label>종목
+        <select id="company"></select>
+      </label>
+      <label>기간
+        <select id="range">
+          <option value="60">최근 3개월</option>
+          <option value="120" selected>최근 6개월</option>
+          <option value="250">최근 1년</option>
+          <option value="0">전체</option>
+        </select>
+      </label>
+      <span id="company-meta" class="muted"></span>
+    </section>
+
+    <section id="kpis" class="kpis" aria-label="핵심 지표"></section>
+
+    <section class="card">
+      <h2>종가와 거래량</h2>
+      <div id="chart-price" class="chart"></div>
+    </section>
+
+    <div class="grid2">
+      <section class="card">
+        <h2>월별 평균 종가 <small>종목별 · 최근 24개월</small></h2>
+        <div id="chart-monthly" class="chart small"></div>
+        <div id="table-monthly" class="scroll"></div>
+      </section>
+      <section class="card">
+        <h2>업종별 평균 등락률 <small>전체 종목 · 최근 30일</small></h2>
+        <div id="chart-sector" class="chart small"></div>
+        <div id="table-sector"></div>
+      </section>
+    </div>
+
+    <div class="grid2">
+      <section class="card">
+        <h2>최근 거래일 순위 <small>전체 종목</small></h2>
+        <div class="tabs" role="group" aria-label="순위 기준">
+          <button type="button" class="tab active" data-rank="change-desc">상승률</button>
+          <button type="button" class="tab" data-rank="change-asc">하락률</button>
+          <button type="button" class="tab" data-rank="volume-desc">거래량</button>
+        </div>
+        <div id="table-ranking"></div>
+      </section>
+      <section class="card">
+        <h2>변동성 큰 종목 <small>±4% 이상 움직인 날이 3일 이상 · 최근 180일</small></h2>
+        <div id="table-volatile"></div>
+      </section>
+    </div>
+
+    <section class="card">
+      <h2>재무 비율 <small>선택한 종목</small></h2>
+      <div id="table-fin" class="scroll"></div>
+    </section>
+
+    <div class="grid2">
+      <section class="card">
+        <h2>시세 등록·삭제 <small>선택한 종목</small></h2>
+        <form id="price-form" class="form" autocomplete="off">
+          <div class="form-grid">
+            <label>거래일 <input name="trade_date" type="date" required></label>
+            <label>시가 <input name="open_price" type="number" min="0" step="1" required></label>
+            <label>고가 <input name="high_price" type="number" min="0" step="1" required></label>
+            <label>저가 <input name="low_price" type="number" min="0" step="1" required></label>
+            <label>종가 <input name="close_price" type="number" min="0" step="1" required></label>
+            <label>거래량 <input name="volume" type="number" min="0" step="1" required></label>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn primary">시세 등록</button>
+            <span id="price-msg" class="form-msg" role="alert"></span>
+          </div>
+        </form>
+        <div id="table-recent"></div>
+      </section>
+
+      <section class="card">
+        <h2>종목 메모 <small>선택한 종목</small></h2>
+        <form id="note-form" class="form" autocomplete="off">
+          <label>제목 <input name="title" type="text" maxlength="100" required></label>
+          <label>내용 <textarea name="content" rows="3" required></textarea></label>
+          <div class="form-actions">
+            <button type="submit" class="btn primary">메모 등록</button>
+            <span id="note-msg" class="form-msg" role="alert"></span>
+          </div>
+        </form>
+        <ul id="notes" class="notes"></ul>
+      </section>
+    </div>
+  </main>
+
+  <footer class="foot">정보 제공용 데이터 서비스이며 투자 권유가 아닙니다.</footer>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
