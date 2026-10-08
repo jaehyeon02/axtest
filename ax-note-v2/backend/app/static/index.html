@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AX 근거노트</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top">
+    <a href="#/" class="brand">AX <b>근거노트</b></a>
+    <nav>
+      <a href="#/" data-nav="home">종목</a>
+      <a href="#/notes" data-nav="notes">내 노트</a>
+    </nav>
+    <div class="search">
+      <input id="search" type="search" placeholder="종목명·코드 검색" aria-label="종목 검색" autocomplete="off" />
+      <ul id="search-list" class="search-list" hidden></ul>
+    </div>
+  </header>
+  <div id="app"></div>
+  <p class="disclaimer">표시된 시세·재무·뉴스·공시는 개발용 가상 샘플 데이터예요. 실제 투자 판단에 사용하지 마세요.</p>
+  <script src="app.js"></script>
+</body>
+</html>
