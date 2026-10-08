@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>종목 신호등 대시보드</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>종목 신호등 대시보드</h1>
+      <p class="sub">이동평균·52주 위치·수익률을 DB(SQL 뷰)가 계산하고, 화면은 그 결과를 쉬운 말로 보여 줍니다.</p>
+    </div>
+    <div class="top-right">
+      <span id="health" class="pill">연결 확인 중…</span>
+      <a class="link" href="/docs" target="_blank" rel="noopener">API 문서 (Swagger)</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="card toolbar" aria-label="회원">
+      <label>내 닉네임
+        <select id="member"></select>
+      </label>
+      <form id="member-form" class="inline" autocomplete="off">
+        <label>새 닉네임 <input name="nickname" type="text" maxlength="30" required></label>
+        <button type="submit" class="btn">회원 만들기</button>
+      </form>
+      <span class="muted">로그인은 없고 닉네임으로만 구분해요.</span>
+    </section>
+
+    <section class="card">
+      <h2>종목 신호등 <small>행을 누르면 아래에 자세히 · ☆ 로 관심종목</small></h2>
+      <div class="toolbar">
+        <label>업종
+          <select id="f-sector"><option value="">전체</option></select>
+        </label>
+        <label>정렬
+          <select id="f-order">
+            <option value="good">좋음 신호 많은 순</option>
+            <option value="caution">주의 신호 많은 순</option>
+            <option value="ret_1m">1개월 수익률순</option>
+            <option value="change">오늘 등락순</option>
+            <option value="code">종목코드순</option>
+          </select>
+        </label>
+      </div>
+      <div id="sig-body" class="scroll wide"></div>
+      <p class="muted note">신호 기준: 추세(5·20·60일 평균 정렬), 거래량(20일 평균 대비), 가격 위치(52주 범위), 단기 흐름(1주 수익률). 투자 권유가 아니라 숫자를 쉬운 말로 바꾼 것입니다.</p>
+    </section>
+
+    <section class="card">
+      <h2 id="detail-title">종목 상세</h2>
+      <div id="detail-body"><div class="empty">위 표에서 종목을 선택하세요.</div></div>
+    </section>
+
+    <div class="grid2">
+      <section class="card">
+        <h2>내 관심종목</h2>
+        <div id="watch-body"></div>
+      </section>
+      <section class="card">
+        <h2>모의 포트폴리오 <small>실제 주문이 아닌 연습 기록</small></h2>
+        <div id="pf-body"></div>
+        <form id="trade-form" class="form" autocomplete="off">
+          <div class="form-grid">
+            <label>종목 <select name="company_id" id="trade-company"></select></label>
+            <label>구분 <select name="side"><option value="BUY">매수</option><option value="SELL">매도</option></select></label>
+            <label>날짜 <input name="trade_date" type="date" required></label>
+            <label>수량 <input name="quantity" type="number" min="1" step="1" required></label>
+            <label>가격 <input name="price" type="number" min="0" step="1" placeholder="비우면 최근 종가"></label>
+            <label>메모 <input name="memo" type="text" maxlength="200"></label>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn primary">모의 거래 기록</button>
+            <span id="trade-msg" class="form-msg" role="alert"></span>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <div class="grid2">
+      <section class="card">
+        <h2>수익률 순위 <small>전체 종목</small></h2>
+        <div class="tabs" role="group" aria-label="기간">
+          <button type="button" class="tab" data-ret="1w">1주</button>
+          <button type="button" class="tab active" data-ret="1m">1개월</button>
+          <button type="button" class="tab" data-ret="3m">3개월</button>
+        </div>
+        <div id="rank-body"></div>
+      </section>
+      <section class="card">
+        <h2>업종 요약</h2>
+        <div id="sector-body"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="foot">정보 제공용 데이터 서비스이며 투자 권유가 아닙니다. 모의 거래는 실제 주문이 아닙니다.</footer>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
